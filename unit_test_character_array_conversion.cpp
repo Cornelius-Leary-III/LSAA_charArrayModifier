@@ -42,10 +42,26 @@ TEST(test_cstyle_number_of_input_chars, positive_count)
     
     char* outputCharArray = convertCharacterArrayDataCStyle(testCharArray, testNumberOfChars);
     
-    std::cout << "test input array:  ___" << testCharArray << "___" << std::endl;
-    std::cout << "test output array: ___" << outputCharArray << "___" << std::endl;
-    
-    EXPECT_EQ(outputCharArray, "THIRD.TEST...PHRASE");
+    EXPECT_EQ(outputCharArray[0], 'T');
+    EXPECT_EQ(outputCharArray[1], 'H');
+    EXPECT_EQ(outputCharArray[2], 'I');
+    EXPECT_EQ(outputCharArray[3], 'R');
+    EXPECT_EQ(outputCharArray[4], 'D');
+    EXPECT_EQ(outputCharArray[5], '.');
+    EXPECT_EQ(outputCharArray[6], 'T');
+    EXPECT_EQ(outputCharArray[7], 'E');
+    EXPECT_EQ(outputCharArray[8], 'S');
+    EXPECT_EQ(outputCharArray[9], 'T');
+    EXPECT_EQ(outputCharArray[10], '.');
+    EXPECT_EQ(outputCharArray[11], '.');
+    EXPECT_EQ(outputCharArray[12], '.');
+    EXPECT_EQ(outputCharArray[13], 'P');
+    EXPECT_EQ(outputCharArray[14], 'H');
+    EXPECT_EQ(outputCharArray[15], 'R');
+    EXPECT_EQ(outputCharArray[16], 'A');
+    EXPECT_EQ(outputCharArray[17], 'S');
+    EXPECT_EQ(outputCharArray[18], 'E');
+    EXPECT_EQ(outputCharArray[19], '\0');
 }
 
 TEST(test_cpp_style_input_char_array, empty_array)

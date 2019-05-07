@@ -22,7 +22,7 @@ char* convertCharacterArrayDataCStyle(char* inputCharArray, int numberOfInputCha
     }
     
     // create an output array with enough room for '\0' terminator-char.
-    char outputCharArray[numberOfInputChars + 1];
+    auto outputCharArray = static_cast<char*>(std::malloc(numberOfInputChars * sizeof(char) + 1));
     
     // copy the input contents to the output array.
     strcpy(outputCharArray, inputCharArray);
@@ -43,24 +43,13 @@ char* convertCharacterArrayDataCStyle(char* inputCharArray, int numberOfInputCha
             outputCharArray[currentCharIndex] = toupper(inputCharArray[currentCharIndex]);
         }
         
-        std::cout << "current character: ___" << outputCharArray[currentCharIndex]
-                  << "___" << std::endl;
-        
         ++currentCharIndex;
     }
     
-    std::cout << "input array:  ___" << inputCharArray << "___" << std::endl;
-    std::cout << "output array: ___" << outputCharArray << "___" << std::endl;
-    
-    inputCharArray = outputCharArray;
-    
-    std::cout << std::endl;
-    std::cout << "input array:  ___" << inputCharArray << "___" << std::endl;
-    std::cout << "output array: ___" << outputCharArray << "___" << std::endl;
-    
-    //    return outputCharArray;
-    
-    return inputCharArray;
+    // null-terminate the string.
+    outputCharArray[currentCharIndex] = '\0';
+
+    return outputCharArray;
 }
 
 char* convertCharacterArrayDataCppStyle(char* inputCharArray, int numberOfInputChars)
@@ -76,7 +65,7 @@ char* convertCharacterArrayDataCppStyle(char* inputCharArray, int numberOfInputC
     {
         return inputCharArray;
     }
- 
+    
     // add each character into the vector.
     vector<char> outputChars;
     
