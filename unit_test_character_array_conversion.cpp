@@ -5,7 +5,27 @@
 #include <gtest/gtest.h>
 #include "CharacterArrayConversionFunction.h"
 
-TEST(test_cstyle_input_char_array, empty_array)
+TEST(test_empty_input_char_array, negative_param_number_of_chars)
+{
+    char* emptyCharArray = nullptr;
+    int testNumberOfChars = -5;
+    
+    char* outputCharArray = convertCharacterArrayDataCStyle(emptyCharArray, testNumberOfChars);
+    
+    EXPECT_EQ(outputCharArray, nullptr);
+}
+
+TEST(test_empty_input_char_array, zero_param_number_of_chars)
+{
+    char* emptyCharArray = nullptr;
+    int testNumberOfChars = 0;
+    
+    char* outputCharArray = convertCharacterArrayDataCStyle(emptyCharArray, testNumberOfChars);
+    
+    EXPECT_EQ(outputCharArray, nullptr);
+}
+
+TEST(test_empty_input_char_array, positive_param_number_of_chars)
 {
     char* emptyCharArray = nullptr;
     int testNumberOfChars = 5;
@@ -15,7 +35,7 @@ TEST(test_cstyle_input_char_array, empty_array)
     EXPECT_EQ(outputCharArray, nullptr);
 }
 
-TEST(test_cstyle_number_of_input_chars, negative_count)
+TEST(test_valid_input_char_array, negative_param_number_of_chars)
 {
     char* testCharArray = "test phrase";
     int testNumberOfChars = -9;
@@ -25,7 +45,7 @@ TEST(test_cstyle_number_of_input_chars, negative_count)
     EXPECT_EQ(outputCharArray, testCharArray);
 }
 
-TEST(test_cstyle_number_of_input_chars, zero_count)
+TEST(test_valid_input_char_array, zero_param_number_of_chars)
 {
     char* testCharArray = "another test phrase";
     int testNumberOfChars = 0;
@@ -35,12 +55,27 @@ TEST(test_cstyle_number_of_input_chars, zero_count)
     EXPECT_EQ(outputCharArray, testCharArray);
 }
 
-TEST(test_cstyle_number_of_input_chars, positive_count)
+TEST(test_valid_input_char_array, single_char)
 {
-    char testCharArray[] = "third test___phrase";
-    int testNumberOfChars = 20;
+    char testCharArray[] = "&";
+    int testNumberOfChars = 1;
     
     char* outputCharArray = convertCharacterArrayDataCStyle(testCharArray, testNumberOfChars);
+    
+    EXPECT_TRUE(outputCharArray);
+    
+    EXPECT_EQ(outputCharArray[0], '.');
+    EXPECT_EQ(outputCharArray[1], '\0');
+}
+
+TEST(test_valid_input_char_array, positive_param_number_of_chars)
+{
+    char testCharArray[] = "third test___phrase$$$";
+    int testNumberOfChars = 22;
+    
+    char* outputCharArray = convertCharacterArrayDataCStyle(testCharArray, testNumberOfChars);
+    
+    EXPECT_TRUE(outputCharArray);
     
     EXPECT_EQ(outputCharArray[0], 'T');
     EXPECT_EQ(outputCharArray[1], 'H');
@@ -61,50 +96,10 @@ TEST(test_cstyle_number_of_input_chars, positive_count)
     EXPECT_EQ(outputCharArray[16], 'A');
     EXPECT_EQ(outputCharArray[17], 'S');
     EXPECT_EQ(outputCharArray[18], 'E');
-    EXPECT_EQ(outputCharArray[19], '\0');
-}
-
-TEST(test_cpp_style_input_char_array, empty_array)
-{
-    char* emptyCharArray = nullptr;
-    int testNumberOfChars = 5;
-    
-    char* outputCharArray = convertCharacterArrayDataCppStyle(emptyCharArray, testNumberOfChars);
-    
-    EXPECT_EQ(outputCharArray, nullptr);
-}
-
-TEST(test_cpp_style_number_of_input_chars, negative_count)
-{
-    char* testCharArray = "test phrase";
-    int testNumberOfChars = -9;
-    
-    char* outputCharArray = convertCharacterArrayDataCppStyle(testCharArray, testNumberOfChars);
-    
-    EXPECT_EQ(outputCharArray, testCharArray);
-}
-
-TEST(test_cpp_style_number_of_input_chars, zero_count)
-{
-    char* testCharArray = "another test phrase";
-    int testNumberOfChars = 0;
-    
-    char* outputCharArray = convertCharacterArrayDataCppStyle(testCharArray, testNumberOfChars);
-    
-    EXPECT_EQ(outputCharArray, testCharArray);
-}
-
-TEST(test_cpp_style_number_of_input_chars, positive_count)
-{
-    char testCharArray[] = "third test___phrase";
-    int testNumberOfChars = 20;
-    
-    char* outputCharArray = convertCharacterArrayDataCppStyle(testCharArray, testNumberOfChars);
-    
-    std::cout << "test input array:  ___" << testCharArray << "___" << std::endl;
-    std::cout << "test output array: ___" << outputCharArray << "___" << std::endl;
-    
-    EXPECT_EQ(outputCharArray, "THIRD.TEST...PHRASE");
+    EXPECT_EQ(outputCharArray[19], '.');
+    EXPECT_EQ(outputCharArray[20], '.');
+    EXPECT_EQ(outputCharArray[21], '.');
+    EXPECT_EQ(outputCharArray[22], '\0');
 }
 
 TEST(test_is_alnum, alpha_char_lowercase)
@@ -139,7 +134,37 @@ TEST(test_is_alnum, non_alpha_non_numeric_chars)
     test = '.';
     EXPECT_FALSE(isalnum(test));
     
+    test = '$';
+    EXPECT_FALSE(isalnum(test));
+    
     test = ' ';
     EXPECT_FALSE(isalnum(test));
 }
 
+TEST(test_is_lower, alpha_char_lowercase)
+{
+    char testA = 'a';
+    
+    EXPECT_TRUE(islower(testA));
+}
+
+TEST(test_is_lower, alpha_char_UPPERCASE)
+{
+    char testA = 'C';
+    
+    EXPECT_FALSE(islower(testA));
+}
+
+TEST(test_is_lower, non_alpha_char_numeric)
+{
+    char testA = '0';
+    
+    EXPECT_FALSE(islower(testA));
+}
+
+TEST(test_is_lower, non_alpha_char_symbol)
+{
+    char testA = '*';
+    
+    EXPECT_FALSE(islower(testA));
+}

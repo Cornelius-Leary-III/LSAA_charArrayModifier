@@ -30,7 +30,7 @@ char* convertCharacterArrayDataCStyle(char* inputCharArray, int numberOfInputCha
     int currentCharIndex = 0;
     
     // for each character in the array (except the null terminator)...
-    while (currentCharIndex < numberOfInputChars - 1)
+    while (currentCharIndex < numberOfInputChars)
     {
         if (!isalnum(inputCharArray[currentCharIndex]))
         {
