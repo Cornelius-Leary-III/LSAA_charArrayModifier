@@ -42,6 +42,7 @@ TEST(test_valid_input_char_array, negative_param_number_of_chars)
     
     char* outputCharArray = convertCharacterArrayDataCStyle(testCharArray, testNumberOfChars);
     
+    EXPECT_TRUE(outputCharArray);
     EXPECT_EQ(outputCharArray, testCharArray);
 }
 
@@ -52,6 +53,7 @@ TEST(test_valid_input_char_array, zero_param_number_of_chars)
     
     char* outputCharArray = convertCharacterArrayDataCStyle(testCharArray, testNumberOfChars);
     
+    EXPECT_TRUE(outputCharArray);
     EXPECT_EQ(outputCharArray, testCharArray);
 }
 
@@ -66,6 +68,8 @@ TEST(test_valid_input_char_array, single_char)
     
     EXPECT_EQ(outputCharArray[0], '.');
     EXPECT_EQ(outputCharArray[1], '\0');
+    
+    std::free(outputCharArray);
 }
 
 TEST(test_valid_input_char_array, positive_param_number_of_chars)
@@ -100,6 +104,8 @@ TEST(test_valid_input_char_array, positive_param_number_of_chars)
     EXPECT_EQ(outputCharArray[20], '.');
     EXPECT_EQ(outputCharArray[21], '.');
     EXPECT_EQ(outputCharArray[22], '\0');
+    
+    std::free(outputCharArray);
 }
 
 TEST(test_is_alnum, alpha_char_lowercase)
